@@ -148,3 +148,182 @@ function toCamelCase(str) {
     return stringArr.join('');
 
 }
+
+function parseInt(string) {
+    let numArr = string.split(' ');
+
+    let resultArr = [];
+    const numMap = {
+        'zero':0,
+        'one':1,
+        'two':2,
+        'three':3,
+        'four':4,
+        'five':5,
+        'six':6,
+        'seven':7,
+        'eight':8,
+        'nine':9,
+        'ten':10,
+        'eleven':11,
+        'twelve':12,
+        'thirteen':13,
+        'fourteen':14,
+        'fifteen':15,
+        'sixteen':16,
+        'seventeen':17,
+        'eighteen':18,
+        'nineteen':19
+    };
+
+    const numMap2 = {
+        'ten':10,
+        'twenty':20,
+        'thirty':30,
+        'forty':40,
+        'fifty':50,
+        'sixty':60,
+        'seventy':70,
+        'eighty':80,
+        'ninety':90
+    };
+
+    if(numArr.indexOf('million') !== -1) {
+        return 1000000;
+    }
+
+    if(numArr.indexOf('thousand') !== -1) {
+        let numArrClone = numArr.slice(0, numArr.indexOf('thousand'));
+        numArr.splice(0, numArr.indexOf('thousand') + 1);
+
+        if(numArrClone.indexOf('hundred') !== -1) {
+
+            let hundrThousNum = numArrClone[0];
+            numArrClone.splice(0, 2);
+
+            for(let key in numMap) {
+                if(key === hundrThousNum) {
+                    resultArr.push(numMap[key] + '00000');
+                }
+            }
+
+
+        }
+
+
+        if(numArrClone.length && numArrClone[0].indexOf('-') !== -1) {
+            numArrClone = numArrClone[0].split('-');
+            let decThousNum = numArrClone[0];
+            numArrClone.splice(0, 1);
+            for(let key in numMap2) {
+                if(key === decThousNum) {
+                    resultArr.push(numMap2[key] + '000');
+                }
+
+            }
+            let unitThousNum = numArrClone[0];
+            numArrClone.splice(0, 1);
+            for(let key in numMap) {
+                if(key === unitThousNum) {
+                    resultArr.push(numMap[key] + '000');
+                }
+            }
+
+        }
+
+        if(numArrClone.length && numArrClone[0].indexOf('ty') !== -1) {
+
+            let num = numArrClone[0];
+            numArrClone.splice(0, 1);
+            for(let key in numMap2) {
+                if(key === num) {
+                    resultArr.push(numMap2[key] + '000');
+                }
+            }
+        }
+
+
+        let unitThousNum = numArrClone[0];
+        numArrClone.splice(0, 1);
+        for(let key in numMap) {
+            if(key === unitThousNum) {
+                resultArr.push(numMap[key] + '000');
+            }
+
+        }
+    }
+
+    if(numArr.indexOf('hundred') !== -1) {
+
+        let hundrNum = numArr[0];
+        numArr.splice(0, 2);
+
+        for(let key in numMap) {
+            if(key === hundrNum) {
+                resultArr.push(numMap[key] + '00');
+            }
+        }
+
+
+    }
+
+
+    if(numArr.indexOf('and') !== -1) {
+        numArr.splice(0, 1);
+
+    }
+
+    if(numArr.length && numArr[0].indexOf('-') !== -1) {
+
+        let newArr = numArr[0].split('-');
+        let decNum = newArr[0];//разряд десятков тысяч
+        newArr.splice(0, 1);
+        for(let key in numMap2) {
+            if(key === decNum) {
+                resultArr.push(numMap2[key]);
+            }
+
+        }
+        let unitNum = newArr[0];//разряд единиц тысяч
+        newArr.splice(0, 1);
+        for(let key in numMap) {
+            if(key === unitNum) {
+                resultArr.push(numMap[key]);
+            }
+        }
+
+    }
+
+
+    if(numArr.length  && numArr[0].indexOf('ty') !== -1) {
+
+        let num = numArr[0];
+        numArr.splice(0, 1);
+        for(let key in numMap2) {
+            if(key === num) {
+                resultArr.push(numMap2[key]);
+            }
+        }
+    }
+
+
+
+
+    let unitNum = numArr[0];
+    numArr.splice(0, 1);
+    for(let key in numMap) {
+        if(key === unitNum) {
+            resultArr.push(numMap[key]);
+        }
+
+    }
+
+    let finalResult = 0;
+    for(let i = 0; i < resultArr.length; i++) {
+        finalResult += +resultArr[i];
+    }
+
+    return finalResult;
+
+
+}
