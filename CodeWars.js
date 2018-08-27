@@ -107,3 +107,27 @@ Array.prototype.even = function() {
 Array.prototype.odd = function() {
     return this.filter(i=>i%2 !== 0);
 }
+
+function findOdd(A) {
+    let map = {};
+
+    for(let i of A) {
+        let prop = i + '';
+
+        if(!map[prop]) {
+            map[prop] = 1;
+
+        } else {
+            map[prop] += 1;
+        }
+    }
+
+
+
+    for(let a in map) {
+        if(map[a] % 2 !== 0) {
+            return Number(a);
+        }
+
+    }
+}
