@@ -131,3 +131,20 @@ function findOdd(A) {
 
     }
 }
+
+function toCamelCase(str) {
+    let stringArr = (str.indexOf('-') !== -1) ? str.split('-') : str.split('_');
+    let resString = '';
+    let firstWord = stringArr[0];
+
+    for(let i = 1; i < stringArr.length; i++) {
+
+        let wordsArr = stringArr[i].split('');
+        let firstLetter = wordsArr[0].toUpperCase();
+        let wordOther = wordsArr.slice(1);
+        stringArr[i] = firstLetter + wordOther.join('');
+    }
+
+    return stringArr.join('');
+
+}
